@@ -3,7 +3,7 @@ import './GameDetail.css';
 
 const GameDetail = props => {
   const { game } = props
-  console.log(game)
+
 
   // This code sets up the list contents based on whether any games are found or not
   let details

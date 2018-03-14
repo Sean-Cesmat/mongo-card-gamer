@@ -48,10 +48,36 @@ class App extends Component {
   }
   handleSubmit(e) {
     // Add your code here to handle adding a new game to the database
+    e.preventDefault()
+    console.log(this.state);
+    var newObj = {
+      nameVal: this.state.nameVal,
+      minVal: this.state.minVal,
+      maxVal: this.state.maxVal,
+    }
+    axios.post('/api/cardgames', newObj).then( () => {
+      console.log('hi');
+      this.setState({
+        nameVal: '',
+        minVal: '',
+        maxVal: ''
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   // API call goes here so that data is available after component mounts
   componentDidMount() {
+    axios.get('/api/cardgames').then(result => {
+      this.setState({
+        games: result.data
+      })
+    })
+  }
+
+  componentWillUpdate() {
     axios.get('/api/cardgames').then(result => {
       this.setState({
         games: result.data
@@ -66,8 +92,11 @@ class App extends Component {
         <GameDetail game={this.state.current} />
         <AddGameForm
           onNameChange={this.handleNameChange}
+          nameVal={this.state.nameVal}
           onMinChange={this.handleMinChange}
+          minVal={this.state.minVal}
           onMaxChange={this.handleMaxChange}
+          maxVal={this.state.maxVal}
           onSubmit={this.handleSubmit} />
       </div>
     );
