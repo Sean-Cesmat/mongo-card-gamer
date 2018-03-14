@@ -43,11 +43,11 @@ app.post('/api/cardgames', (req, res) => {
     name: req.body.nameVal,
     minPlayers: parseInt(req.body.minVal),
     maxPlayers: parseInt(req.body.maxVal)
-  }, function(err, user) {
+  }, function(err, game) {
     if (err) {
       return console.log(err);
     } else {
-      res.send('success');
+      res.send(game);
     }
   })
 
